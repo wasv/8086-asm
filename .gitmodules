@@ -1,0 +1,3 @@
+[submodule "tools/djlink"]
+	path = tools/djlink
+	url = git@github.com:wasv/djlink
