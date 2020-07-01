@@ -2,23 +2,30 @@ NASM=nasm
 DJLINK=tools/djlink/djlink.exe
 PCE_DOS=tools/pce/src/arch/dos/pce-dos
 
-SRCS=$(wildcard *.asm)
-OBJS=$(SRCS:.asm=.obj)
+BINDIR=out
 
-all: test.com
+SRCS=$(shell find src/ -name "*.asm")
+OBJS=$(patsubst %.asm,$(BINDIR)/%.obj,$(SRCS))
 
-run: test.com | $(PCE_DOS)
+ifndef V
+    .SILENT:
+endif
+
+all: $(BINDIR)/test.com
+
+pce: $(PCE_DOS)
+djlink: $(DJLINK)
+
+run: $(BINDIR)/test.com | $(PCE_DOS)
 	$(PCE_DOS) $^
 
-%.com: $(OBJS) | $(DJLINK)
+$(BINDIR)/%.com: $(OBJS) | $(DJLINK)
+	@mkdir -p $(@D)
 	@echo " LINK $(*)"
-	$(DJLINK) -m $(*).map -o $@ $^
+	$(DJLINK) -m $(@D)/$(*).map -o $@ $^
 
-tools/djlink/djlink.exe:
-	@echo " MAKE djlink"
-	$(MAKE) -s -C djlink
-
-%.obj: %.asm
+$(BINDIR)/%.obj: %.asm
+	@mkdir -p $(@D)
 	@echo " NASM $(*)"
 	$(NASM) -f obj -o $@ $<
 
@@ -32,12 +39,12 @@ $(PCE_DOS): | tools/pce
 	$(MAKE) -C tools/pce src/arch/dos/pce-dos
 
 tools/%:
-	@echo "Submodule $(*) is missing"
+	@echo " SUBM $(*)"
 	git submodule update --init
 
 clean:
-	rm -f *.obj *.com *.COM *.map
+	rm -rf out
+	git submodule foreach "git clean -fqdx"
 
-.PHONY: clean all run
+.PHONY: clean all run pce djlink
 .SECONDARY:
-.SILENT:
