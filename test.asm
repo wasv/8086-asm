@@ -6,7 +6,7 @@ section code
 extern msg
 global ..start
 ..start:
-    MOV dx,MSG
+    MOV dx,msg
     MOV ah,9
     INT 21h
     MOV ah,4Ch
@@ -14,6 +14,4 @@ global ..start
 
 section data
 
-MSG:
-    db 'Hello, World!',0Dh,0Ah,'$'
 group prog code data
