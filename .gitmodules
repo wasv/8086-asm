@@ -1,3 +1,6 @@
 [submodule "tools/djlink"]
 	path = tools/djlink
 	url = git@github.com:wasv/djlink
+[submodule "tools/pce"]
+	path = tools/pce
+	url = git://git.hampa.ch/pce.git
