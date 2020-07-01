@@ -1,34 +1,20 @@
 DJLINK=tools/djlink/djlink.exe
 
-all: gas nasm dj
+SRCS=$(wildcard *.asm)
+OBJS=$(SRCS:.asm=.obj)
 
-gas: test.gas.bin
-nasm: test.nasm.bin
-dj: test.dj.bin test.dj.com
-
-%.gas.o: %.s
-	as -mtune=i8086 -o $@ $<
-
-%.gas.bin: %.gas.o
-	ld --oformat binary -o $@ $<
-
-%.nasm.bin: %.asm
-	nasm -o $@ $<
-
-%.dj.obj: %.asm
+all: test.com
+%.obj: %.asm
 	nasm -f obj -o $@ $<
 
-%.dj.bin: %.dj.obj $(DJLINK)
-	$(DJLINK) -m test.dj.map -o $@ $<
-
-%.dj.com: %.dj.obj $(DJLINK)
-	$(DJLINK) -m test.dj.map -o $@ $<
+%.com: $(OBJS) | $(DJLINK)
+	$(DJLINK) -m $(*).map -o $@ $^
 
 tools/djlink/djlink.exe:
 	$(MAKE) -s -C djlink
 
 clean:
-	rm -f *.bin *.exe *.o *.obj *.com *.COM *.EXE *.map
+	rm -f *.obj *.com *.COM *.map
 
-.PHONY: clean gas nasm dj all
+.PHONY: clean all
 .SECONDARY:
