@@ -3,4 +3,8 @@
 *.BIN
 *.bin
 *.o
+*.OBJ
 *.obj
+*.EXE
+*.exe
+*.map
