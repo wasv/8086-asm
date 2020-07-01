@@ -3,4 +3,4 @@
 	url = git@github.com:wasv/djlink
 [submodule "tools/pce"]
 	path = tools/pce
-	url = git://git.hampa.ch/pce.git
+	url = git@github.com:wasv/pce-mirror
