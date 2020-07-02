@@ -1,6 +1,6 @@
 [submodule "tools/djlink"]
 	path = tools/djlink
-	url = git@github.com:wasv/djlink
+	url = https://gitlab.com/makesthingsxyz/8086-dos-dev/djlink
 [submodule "tools/pce"]
 	path = tools/pce
-	url = git@github.com:wasv/pce-mirror
+	url = https://gitlab.com/makesthingsxyz/8086-dos-dev/pce
