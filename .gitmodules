@@ -3,4 +3,4 @@
 	url = https://gitlab.com/makesthingsxyz/8086-dos-dev/djlink
 [submodule "tools/pce"]
 	path = tools/pce
-	url = https://gitlab.com/makesthingsxyz/8086-dos-dev/pce
+	url = git://git.hampa.ch/pce.git
